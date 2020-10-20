@@ -4,7 +4,7 @@ require 'json' # can still use xml Montana prefers JSON
 
 # You can test this via: 
 #!/usr/bin/env ruby
-require './feed'
+#require './feed'
 
 puts Feed.new.rss
 
