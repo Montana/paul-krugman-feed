@@ -14,3 +14,5 @@ open http://localhost:9292/feed.rss
 This will display economist Paul Krugman's feed in RSS. 
 
 https://en.wikipedia.org/wiki/Paul_Krugman
+
+Made by Montana Mendy
