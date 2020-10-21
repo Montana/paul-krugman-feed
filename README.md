@@ -1,5 +1,6 @@
 # Paul Krugman RSS Feed (by Montana Mendy)
 Economist Paul Krugman's feed in RSS format.
+![Krugman](krugman.jpg)
 
 # Usage 
 
