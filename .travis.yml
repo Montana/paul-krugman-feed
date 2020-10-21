@@ -1,9 +1,3 @@
-os: linux
-dist: focal
-arch: arm64-graviton2
-group: edge
-virt: lxd
-
 - language: ruby
-  script:
-    - return 0
+    script:
+      - return 0
