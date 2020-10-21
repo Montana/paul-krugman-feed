@@ -1,3 +1,2 @@
 language: ruby
-script:
-  - return 0
+sudo: false
