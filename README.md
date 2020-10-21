@@ -1,4 +1,4 @@
-# Paul Krugman RSS Feed (by Montana Mendy)
+# Paul Krugman RSS Feed 
 ![Krugman](krugman.jpg)
 >Economist Paul Krugman's feed in RSS format.
 
@@ -16,9 +16,7 @@ This will display economist Paul Krugman's feed in RSS.
 
 https://en.wikipedia.org/wiki/Paul_Krugman
 
-Made by Montana Mendy
-
-
 # Changelog 
 
 * Added "The Krugman Build" (just a Travis CI instance) 
+* Updated by Montana Mendy for current working use (Oct, 2020) 
