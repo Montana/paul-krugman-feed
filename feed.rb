@@ -1,55 +1,36 @@
-require 'nokogiri'
-require 'mechanize'
-require 'json' # can still use xml Montana prefers JSON 
+require 'rss'
+require 'time'
 
-# You can test this via: 
-#!/usr/bin/env ruby
-#require './feed'
-#working on bash script to improve intervals
+articles = [
+  {
+    title: "The Economic Consequences of Mr. Trump",
+    link: "https://www.nytimes.com/2020/01/01/opinion/trump-economy.html",
+    description: "Paul Krugman discusses the economic policies of Donald Trump.",
+    pub_date: Time.parse("2020-01-01")
+  },
+  {
+    title: "The Rise and Fall of Bitcoin",
+    link: "https://www.nytimes.com/2021/02/15/opinion/bitcoin.html",
+    description: "Paul Krugman analyzes the volatility of Bitcoin.",
+    pub_date: Time.parse("2021-02-15")
+  },
+]
 
-puts Feed.new.rss
+rss = RSS::Maker.make("2.0") do |maker|
+  maker.channel.author = "Paul Krugman"
+  maker.channel.updated = Time.now.to_s
+  maker.channel.about = "Paul Krugman's Articles"
+  maker.channel.title = "Paul Krugman's RSS Feed"
 
-class Feed
-
-  BLOG_URL = 'http://krugman.blogs.nytimes.com/'
-
-  def html
-    agent = Mechanize.new do |agent|
-      agent.user_agent_alias = 'Mac Safari'
+  articles.each do |article|
+    maker.items.new_item do |item|
+      item.link = article[:link]
+      item.title = article[:title]
+      item.updated = article[:pub_date].to_s
+      item.description = article[:description]
     end
-    page = agent.get(BLOG_URL).content
-
-    @html ||= Nokogiri::HTML(page) do |config|
-      config.options = Nokogiri::XML::ParseOptions::NONET | Nokogiri::XML::ParseOptions::NOERROR
-    end
-  end
-
-  def rss
-    items = html.css('article').map do |article|
-      date = 
-      url = article.at('h3 a')['href'].split('?')[0]
-      item = <<-ITEM
-        <item>
-          <title>#{article.css('h3').text}</title>
-          <description>
-            <![CDATA[ #{article.css('.entry-content').inner_html} ]]>
-          </description>
-          <pubDate>#{article.at('time')['datetime']}</pubDate>
-          <link>#{url}</link>
-          <guid>#{url}</guid>
-        </item>
-        ITEM
-    end
-
-    @rss ||= <<-RSS.strip
-      <?xml version="1.0"?>
-      <rss version="2.0" >
-        <channel>
-          <title>#{html.css('title').text}</title>
-          <link>#{BLOG_URL}</link>
-          #{items.join('')}
-        </channel>
-      </rss>
-    RSS
   end
 end
+
+File.write("paul_krugman_rss.xml", rss)
+puts "RSS feed created successfully: paul_krugman_rss.xml"
