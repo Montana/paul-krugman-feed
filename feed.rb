@@ -1,6 +1,24 @@
 require 'rss'
 require 'time'
 
+def create_rss_feed(articles, author, title, about, output_file)
+  RSS::Maker.make("2.0") do |maker|
+    maker.channel.author = author
+    maker.channel.updated = Time.now.to_s
+    maker.channel.about = about
+    maker.channel.title = title
+
+    articles.each do |article|
+      maker.items.new_item do |item|
+        item.link = article[:link]
+        item.title = article[:title]
+        item.updated = article[:pub_date].to_s
+        item.description = article[:description]
+      end
+    end
+  end
+end
+
 articles = [
   {
     title: "The Economic Consequences of Mr. Trump",
@@ -16,21 +34,17 @@ articles = [
   },
 ]
 
-rss = RSS::Maker.make("2.0") do |maker|
-  maker.channel.author = "Paul Krugman"
-  maker.channel.updated = Time.now.to_s
-  maker.channel.about = "Paul Krugman's Articles"
-  maker.channel.title = "Paul Krugman's RSS Feed"
+rss = create_rss_feed(
+  articles,
+  "Paul Krugman",
+  "Paul Krugman's RSS Feed",
+  "Paul Krugman's Articles",
+  "paul_krugman_rss.xml"
+)
 
-  articles.each do |article|
-    maker.items.new_item do |item|
-      item.link = article[:link]
-      item.title = article[:title]
-      item.updated = article[:pub_date].to_s
-      item.description = article[:description]
-    end
-  end
+begin
+  File.write("paul_krugman_rss.xml", rss)
+  puts "RSS feed created successfully: paul_krugman_rss.xml"
+rescue StandardError => e
+  puts "Failed to create RSS feed: #{e.message}"
 end
-
-File.write("paul_krugman_rss.xml", rss)
-puts "RSS feed created successfully: paul_krugman_rss.xml"
