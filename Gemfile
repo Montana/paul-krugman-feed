@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
-gem 'rss', '~> 0.2.9'
+gem 'rss'
 
 group :development, :test do
   gem 'rspec', '~> 3.10'
