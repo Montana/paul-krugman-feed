@@ -4,14 +4,33 @@
 
 # Usage 
 
-Just start a rack server: 
+Just start a rack server, the rack server isn't apart of this repo, but you can easily set it up via putting this into your `Gemfile`:
+
+```ruby
+gem 'rack'
+gem 'puma' # You can use webrick or another server if you prefer
+```
+
+Create a basic rack app:
+
+```ruby
+require 'rack'
+
+app (etc etc)
+```
+
+Then run:
 
 ```bash
-bundle install
-bundle exec rackup -p 9292 config.ru &
-open http://localhost:9292/feed.rss
-``` 
+rackup -p 9292
+```
+Then you'll see: 
 
+```bash
+[2024-07-30 12:00:00] INFO  WEBrick 1.4.2
+[2024-07-30 12:00:00] INFO  ruby 3.1.2 (2023-04-23) [x86_64-linux]
+[2024-07-30 12:00:00] INFO  WEBrick::HTTPServer#start: pid=12345 port=9292
+``` 
 This will display economist Paul Krugman's feed in RSS. 
 
 https://en.wikipedia.org/wiki/Paul_Krugman
