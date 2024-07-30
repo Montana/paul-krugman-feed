@@ -1,19 +1,31 @@
 require 'rss'
 require 'time'
 
-def create_rss_feed(articles, author, title, about, link)
-  RSS::Maker.make("2.0") do |maker|
-    maker.channel.author = author
-    maker.channel.updated = Time.now.to_s
-    maker.channel.about = about
-    maker.channel.title = title
-    maker.channel.link = link
-    maker.channel.description = about 
+class RSSFeedCreator
+  def self.create(articles, author, title, about, link)
+    RSS::Maker.make("2.0") do |maker|
+      set_channel_info(maker.channel, author, title, about, link)
+      add_items(maker.items, articles)
+    end
+  end
+
+  private
+
+  def self.set_channel_info(channel, author, title, about, link)
+    channel.author = author
+    channel.updated = Time.now.to_s
+    channel.about = about
+    channel.title = title
+    channel.link = link
+    channel.description = about
+  end
+
+  def self.add_items(items, articles)
     articles.each do |article|
-      maker.items.new_item do |item|
+      items.new_item do |item|
         item.link = article[:link]
         item.title = article[:title]
-        item.updated = article[:pub_date].to_s
+        item.updated = article[:pub_date].iso8601
         item.description = article[:description]
       end
     end
@@ -32,20 +44,21 @@ articles = [
     link: "https://www.nytimes.com/2021/02/15/opinion/bitcoin.html",
     description: "Paul Krugman analyzes the volatility of Bitcoin.",
     pub_date: Time.parse("2021-02-15")
-  },
+  }
 ]
 
-rss = create_rss_feed(
-  articles,
-  "Paul Krugman",
-  "Paul Krugman's RSS Feed",
-  "Paul Krugman's Articles",
-  "https://www.nytimes.com/column/paul-krugman"  
-)
-
 begin
-  File.write("paul_krugman_rss.xml", rss.to_s)
-  puts "RSS feed created successfully: paul_krugman_rss.xml"
+  rss = RSSFeedCreator.create(
+    articles,
+    "Paul Krugman",
+    "Paul Krugman's RSS Feed",
+    "Paul Krugman's Articles",
+    "https://www.nytimes.com/column/paul-krugman"  
+  )
+
+  output_file = "paul_krugman_rss.xml"
+  File.write(output_file, rss.to_s)
+  puts "RSS feed created successfully: #{output_file}"
 rescue StandardError => e
   puts "Failed to create RSS feed: #{e.message}"
 end
