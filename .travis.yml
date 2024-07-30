@@ -1,11 +1,10 @@
 language: ruby
-sudo: false
-
-script: return 0 
 
 rvm:
-  - 1.9.3
-  - 2.1
-  - 2.2
-  - 2.3
-  - ruby-head
+  - 2.7
+
+script:
+  - ruby feed.rb
+
+before_install:
+  - gem install rss
