@@ -2,10 +2,19 @@ language: ruby
 
 rvm:
   - 2.7
+  - 3.0
+  - 3.1
 
-script:
-  - ruby krugman_feed.rb
-  - cat krugman_feed.rb 
+cache: bundler
 
 before_install:
-  - gem install rss
+  - gem install bundler
+
+install:
+  - bundle install
+
+script:
+  - bundle exec rubocop
+  - bundle exec rspec
+  - ruby krugman_feed.rb
+  - cat paul_krugman_rss.xml
