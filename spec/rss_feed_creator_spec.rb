@@ -18,10 +18,10 @@ RSpec.describe RSSFeedCreator do
     it 'creates an RSS feed' do
       rss = described_class.create(
         articles,
-        'Test Author',
-        'Test Feed',
-        'Test Description',
-        'https://example.com'
+        'Paul Krugman',
+        'KrugmanFeed',
+        'Economist Krugman',
+        'https://www.nytimes.com'
       )
 
       expect(rss).to be_a(RSS::Rss)
