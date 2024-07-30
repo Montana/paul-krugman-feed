@@ -1,5 +1,7 @@
 # frozen_string_literal: true
+
 require_relative '../krugman_feed'
+
 RSpec.describe RSSFeedCreator do
   let(:articles) do
     [
@@ -11,6 +13,7 @@ RSpec.describe RSSFeedCreator do
       }
     ]
   end
+
   describe '.create' do
     it 'creates an RSS feed' do
       rss = described_class.create(
@@ -27,3 +30,4 @@ RSpec.describe RSSFeedCreator do
       expect(rss.items.first.title).to eq('Test Article')
     end
   end
+end
