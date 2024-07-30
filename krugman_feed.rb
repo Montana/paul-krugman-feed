@@ -3,7 +3,7 @@
 require 'rss'
 require 'time'
 
-# grab krugman articles 
+# krugman data
 class RSSFeedCreator
   def self.create(articles, author, title, about, link)
     RSS::Maker.make('2.0') do |maker|
