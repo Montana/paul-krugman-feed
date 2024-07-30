@@ -4,7 +4,7 @@ rvm:
   - 2.7
 
 script:
-  - ruby feed.rb
+  - ruby krugman_feed.rb
 
 before_install:
   - gem install rss
