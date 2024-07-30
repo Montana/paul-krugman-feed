@@ -8,7 +8,7 @@ def create_rss_feed(articles, author, title, about, link)
     maker.channel.about = about
     maker.channel.title = title
     maker.channel.link = link
-    maker.channel.description = about  # Using 'about' as description
+    maker.channel.description = about 
     articles.each do |article|
       maker.items.new_item do |item|
         item.link = article[:link]
@@ -40,7 +40,7 @@ rss = create_rss_feed(
   "Paul Krugman",
   "Paul Krugman's RSS Feed",
   "Paul Krugman's Articles",
-  "https://www.nytimes.com/column/paul-krugman"  # Add a link to Krugman's column
+  "https://www.nytimes.com/column/paul-krugman"  
 )
 
 begin
