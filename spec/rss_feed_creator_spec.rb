@@ -1,4 +1,3 @@
-@@ -1,27 +1,27 @@
 # frozen_string_literal: true
 require_relative '../krugman_feed'
 RSpec.describe RSSFeedCreator do
