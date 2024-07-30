@@ -1,12 +1,14 @@
 require 'rss'
 require 'time'
 
-def create_rss_feed(articles, author, title, about)
+def create_rss_feed(articles, author, title, about, link)
   RSS::Maker.make("2.0") do |maker|
     maker.channel.author = author
     maker.channel.updated = Time.now.to_s
     maker.channel.about = about
     maker.channel.title = title
+    maker.channel.link = link
+    maker.channel.description = about  # Using 'about' as description
     articles.each do |article|
       maker.items.new_item do |item|
         item.link = article[:link]
@@ -37,7 +39,8 @@ rss = create_rss_feed(
   articles,
   "Paul Krugman",
   "Paul Krugman's RSS Feed",
-  "Paul Krugman's Articles"
+  "Paul Krugman's Articles",
+  "https://www.nytimes.com/column/paul-krugman"  # Add a link to Krugman's column
 )
 
 begin
