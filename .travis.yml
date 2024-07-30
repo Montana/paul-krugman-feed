@@ -5,6 +5,7 @@ rvm:
 
 script:
   - ruby krugman_feed.rb
+  - cat krugman_feed.rb 
 
 before_install:
   - gem install rss
